@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Generate_verification_code_Action</name>
+        <label>Generate verification code Action</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>generateVerificationCode</actionName>
+        <actionType>generateVerificationCode</actionType>
+        <connector>
+            <targetReference>send_email_to_contact</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <nameSegment>generateVerificationCode</nameSegment>
+        <offset>0</offset>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>send_email_to_contact</name>
+        <label>send email to contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>emailSimple</actionName>
+        <actionType>emailSimple</actionType>
+        <connector>
+            <targetReference>assign_success_message</targetReference>
+        </connector>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>recipientAddresses</name>
+            <value>
+                <collectionElements>
+                    <elementReference>get_Contact.Email</elementReference>
+                </collectionElements>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderType</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>OrgWideEmailAddress</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>senderAddress</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>nitanshi@astreait.com</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>composeEmailContent</name>
+            <value>
+                <stringValue>True</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailSubject</name>
+            <value>
+                <stringValue>OTP Verification | Field Representative Verification</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>emailBody</name>
+            <value>
+                <inputConfiguratorMode>Custom</inputConfiguratorMode>
+                <stringValue>&lt;p&gt;{!MailBody}&lt;/p&gt;</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>sendRichBody</name>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </inputParameters>
+        <nameSegment>emailSimple</nameSegment>
+        <offset>0</offset>
+        <versionString>2.0.1</versionString>
+    </actionCalls>
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>assign_error</name>
+        <label>assign error</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>verification_message_initial</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>errormessage</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>assign_success_message</name>
+        <label>assign success message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>verification_message_initial</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>OTP_sent_message</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>authCodeFlow1</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Generate_verification_code_Action.authenticationKey</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <name>Contact_Found_or_Not</name>
+        <label>Contact Found or Not</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>assign_error</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No Contact Found</defaultConnectorLabel>
+        <rules>
+            <name>Contact_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>get_Contact</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Generate_verification_code_Action</targetReference>
+            </connector>
+            <label>Contact Found</label>
+        </rules>
+    </decisions>
+    <description>Used to sent OTP verification to the mail of the field representative for verification</description>
+    <environments>Default</environments>
+    <interviewLabel>Send Verification OTP {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Send Verification OTP</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <name>get_Contact</name>
+        <label>get Contact</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Contact_Found_or_Not</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Email</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>conEmail</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Contact</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>get_Contact</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Contain message that no field representative with the email found.</description>
+        <name>errormessage</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;Sorry, there are no field representative with this email.&lt;/p&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <name>MailBody</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;!-- ===== OTP EMAIL TEMPLATE — Paste inside &lt;body&gt; or Email Template HTML editor ===== --&gt;
+
+&lt;table width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#f0f4f8; padding:30px 0;&quot;&gt;
+  &lt;tr&gt;&lt;td align=&quot;center&quot;&gt;
+
+    &lt;table width=&quot;580&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;background:#ffffff; border-radius:16px; overflow:hidden; box-shadow:0 8px 40px rgba(0,40,100,0.10);&quot;&gt;
+
+      &lt;!-- HEADER --&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;background:linear-gradient(135deg,#0070d2 0%,#032d60 100%); padding:36px 40px 28px 40px; text-align:center;&quot;&gt;
+          &lt;div style=&quot;font-family:Georgia,serif; font-size:11px; letter-spacing:4px; color:rgba(255,255,255,0.65); text-transform:uppercase; margin-bottom:6px;&quot;&gt;
+            Bright Electronics · Field Verification
+          &lt;/div&gt;
+          &lt;div style=&quot;font-family:Georgia,serif; font-size:26px; font-weight:bold; color:#ffffff; letter-spacing:1px;&quot;&gt;
+            Identity Verification
+          &lt;/div&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;!-- BODY --&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;padding:38px 44px 20px 44px;&quot;&gt;
+          &lt;p style=&quot;margin:0 0 10px 0; font-family:Georgia,serif; font-size:15px; color:#3e4a5c; line-height:1.7;&quot;&gt;Hello,&lt;/p&gt;
+          &lt;p style=&quot;margin:0 0 28px 0; font-family:Georgia,serif; font-size:15px; color:#3e4a5c; line-height:1.7;&quot;&gt;
+            Please use the one-time password below to complete your
+            &lt;strong&gt;Field Representative Verification&lt;/strong&gt;.
+            This code is confidential — do not share it with anyone.
+          &lt;/p&gt;
+
+          &lt;!-- OTP BOX --&gt;
+          &lt;table width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;margin-bottom:28px;&quot;&gt;
+            &lt;tr&gt;
+              &lt;td align=&quot;center&quot;&gt;
+                &lt;div style=&quot;display:inline-block; background:linear-gradient(135deg,#e8f4fd 0%,#f0f7ff 100%); border:2px dashed #0070d2; border-radius:14px; padding:22px 48px; text-align:center;&quot;&gt;
+                  &lt;div style=&quot;font-family:Georgia,serif; font-size:11px; letter-spacing:3px; color:#0070d2; text-transform:uppercase; margin-bottom:10px;&quot;&gt;Your OTP&lt;/div&gt;
+                  &lt;div style=&quot;font-family:&apos;Courier New&apos;,monospace; font-size:36px; font-weight:bold; letter-spacing:10px; color:#032d60; background:#fff; padding:12px 28px; border-radius:10px; border:1px solid #cce0f5; display:inline-block;&quot;&gt;
+                    {!Generate_verification_code_Action.verificationCode}
+                  &lt;/div&gt;
+                &lt;/div&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/table&gt;
+
+          &lt;!-- WARNING --&gt;
+          &lt;table width=&quot;100%&quot; cellpadding=&quot;0&quot; cellspacing=&quot;0&quot; style=&quot;margin-bottom:28px;&quot;&gt;
+            &lt;tr&gt;
+              &lt;td style=&quot;background:#fff8e1; border-left:4px solid #ffb900; border-radius:0 8px 8px 0; padding:14px 18px;&quot;&gt;
+                &lt;span style=&quot;font-family:Georgia,serif; font-size:13px; color:#7a5c00;&quot;&gt;
+                  ⚠️ &amp;nbsp;This OTP is valid for a &lt;strong&gt;single use only&lt;/strong&gt;.
+                  If you did not request this, contact your Salesforce administrator immediately.
+                &lt;/span&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/table&gt;
+
+          &lt;hr style=&quot;border:none; border-top:1px solid #e8edf2; margin:0 0 22px 0;&quot; /&gt;
+          &lt;p style=&quot;margin:0 0 6px 0; font-family:Georgia,serif; font-size:13px; color:#8a95a3; text-align:center;&quot;&gt;
+            Sent via &lt;strong style=&quot;color:#0070d2;&quot;&gt;Salesforce&lt;/strong&gt; · Field Operations Verification System
+          &lt;/p&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+
+      &lt;!-- FOOTER --&gt;
+      &lt;tr&gt;
+        &lt;td style=&quot;background:#f7f9fc; padding:18px 44px; border-top:1px solid #e8edf2; border-radius:0 0 16px 16px;&quot;&gt;
+          &lt;p style=&quot;margin:0; font-family:Georgia,serif; font-size:12px; color:#aab2bd; text-align:center; line-height:1.6;&quot;&gt;
+            This is an automated message. Please do not reply to this email.&lt;br/&gt;
+            © 2026 Bright Electronics Pvt. Ltd. | Powered by Salesforce
+          &lt;/p&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+
+    &lt;/table&gt;
+
+  &lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;</text>
+    </textTemplates>
+    <textTemplates>
+        <description>contains message that otp was sent successfully to the email.</description>
+        <name>OTP_sent_message</name>
+        <isViewedAsPlainText>false</isViewedAsPlainText>
+        <text>&lt;p&gt;OTP sent successfully to {!get_Contact.Email}&lt;/p&gt;</text>
+    </textTemplates>
+    <variables>
+        <description>Authorization Code from the flow 1 which sends to the second flow</description>
+        <name>authCodeFlow1</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>email of the field representative user (contact)</description>
+        <name>conEmail</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>This contains the message about whether a contact was found and verification email was sent or contact was not found.</description>
+        <name>verification_message_initial</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+</Flow>

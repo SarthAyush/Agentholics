@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This template is used to retrieve knowledge from  knowledge article and to  help answer user query.</description>
+    <developerName>Retail_agent_Knowlege_Article</developerName>
+    <masterLabel>Retail agent Knowlege Article</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>Analyze the file {!$EinsteinSearch:File_ADL_zMly_Retail_Age_1Cx_qDx22ac792e.results}  and answer the users questions feed according to the {!$Input:Query}  
+
+
+
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>Query</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:Query</referenceName>
+            <required>true</required>
+        </inputs>
+        <inputs>
+            <apiName>RetrieverIdOrName</apiName>
+            <definition>primitive://String</definition>
+            <referenceName>Input:RetrieverIdOrName</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Draft</status>
+        <templateDataProviders>
+            <definition>invocable://getEinsteinRetrieverResults/File_ADL_zMly_Retail_Age_1Cx_qDx22ac792e</definition>
+            <description>File_ADL_zMly_Retail_Age</description>
+            <label>File_ADL_zMly_Retail_Age</label>
+            <parameters>
+                <definition>primitive://String</definition>
+                <isRequired>true</isRequired>
+                <parameterName>searchText</parameterName>
+                <valueExpression>what are you capable of?</valueExpression>
+            </parameters>
+            <referenceName>EinsteinSearch:File_ADL_zMly_Retail_Age_1Cx_qDx22ac792e</referenceName>
+        </templateDataProviders>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_1</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__knowledgeAnswers</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

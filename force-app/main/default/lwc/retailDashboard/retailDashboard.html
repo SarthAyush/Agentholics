@@ -1,0 +1,46 @@
+<template>
+    <div class="container">
+
+        <!-- Dropdown -->
+        <lightning-combobox
+            label="Select Location"
+            value={selectedLocationId}
+            options={locationOptions}
+            onchange={handleChange}>
+        </lightning-combobox>
+
+        <template if:true={dashboardData}>
+            
+            <!-- KPI Cards -->
+            <div class="metrics">
+
+                <div class="card">
+                    <p>Demand Score</p>
+                    <h1>{dashboardData.location.Demand_Score__c}</h1>
+                </div>
+
+                <div class="card">
+                    <p>Competition</p>
+                    <h1>{dashboardData.location.Competition_Level__c}</h1>
+                </div>
+
+                <div class="card">
+                    <p>Shops Present</p>
+                    <h1>{dashboardData.competitorCount}</h1>
+                </div>
+
+                <div class="card">
+                    <p>Avg Revenue</p>
+                    <h1>₹{dashboardData.location.Avg_Revenue__c}</h1>
+                </div>
+
+            </div>
+
+            <!-- Charts -->
+            <div class="charts">
+                <canvas class="chart" lwc:dom="manual"></canvas>
+            </div>
+
+        </template>
+    </div>
+</template>

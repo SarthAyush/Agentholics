@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>all_locations</fullName>
+    <columns>Name</columns>
+    <columns>Demand_Score__c</columns>
+    <columns>Population__c</columns>
+    <columns>Competition_Level__c</columns>
+    <columns>No_of_Competitors__c</columns>
+    <columns>Avg_Revenue__c</columns>
+    <columns>Avg_Payback_Period__c</columns>
+    <columns>Avg_FootFall__c</columns>
+    <columns>Avg_Setup_Cost__c</columns>
+    <columns>Per_Capita_Income__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Locations</label>
+</ListView>

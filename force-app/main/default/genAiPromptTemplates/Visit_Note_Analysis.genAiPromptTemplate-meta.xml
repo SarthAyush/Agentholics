@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiPromptTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <activeVersionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_10</activeVersionIdentifier>
+    <developerName>Visit_Note_Analysis</developerName>
+    <masterLabel>Visit_Note_Analysis</masterLabel>
+    <overridable>false</overridable>
+    <templateVersions>
+        <content>You are an AI assistant that analyzes retail store visit notes.
+
+Analyze the following note and extract structured insights.
+
+NOTE:
+{!$Input:notetext}
+Return ONLY valid JSON. Do not include explanation or extra text.
+
+Format:
+{
+ &quot;storeName&quot;: &quot;&quot;,
+ &quot;Annual Revenue&quot;: &quot;&quot;,
+ &quot;Average Footfall &quot;: &quot;&quot;
+}
+
+Rules:
+- Annual Revenue Should be in proper integer format
+-Average footfall Should be in proper integer format
+- If data is missing, return empty string
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_1</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are an AI assistant that analyzes retail store visit notes.
+
+Analyze the following note and extract structured insights.
+
+NOTE:
+{!$Input:notetext}
+Return ONLY valid JSON. Do not include explanation or extra text.
+
+Format:
+{
+ &quot;storeName&quot;: &quot;&quot;,
+ &quot;Annual Revenue&quot;: &quot;&quot;,
+ &quot;Average Footfall &quot;: &quot;&quot;
+}
+
+
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_2</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are an AI assistant that analyzes retail store visit notes.
+
+Analyze the following note and extract structured insights.
+
+NOTE:
+{!$Input:notetext}
+
+Return ONLY valid JSON. No explanation.
+
+Rules:
+- &quot;Annual Revenue&quot; must be a number (Decimal, max 2 decimal places)
+- &quot;Average Footfall&quot; must be a number (Decimal, max 2 decimal places)
+- If value is not present, return null (NOT &quot;Unknown&quot;, NOT empty string)
+
+Format:
+{
+ &quot;storeName&quot;: &quot;&quot;,
+ &quot;Annual Revenue&quot;: 0.00,
+ &quot;Average Footfall&quot;: 0.00
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_3</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (numeric)
+- Average Footfall (numeric)
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Accept formats like:
+ &quot;Annual Revenue : 5000 Footfall : 50&quot;
+- Return numbers as decimals with up to 2 decimal places
+- Do NOT return strings for numbers
+- Do NOT return &quot;Unknown&quot;
+- If a value is not found, return null
+
+Return ONLY valid JSON:
+
+{
+ &quot;storeName&quot;: null,
+ &quot;Annual Revenue&quot;: 0.00,
+ &quot;Average Footfall&quot;: 0.00
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_4</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (text)
+- Average Footfall (text)
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Accept formats like:
+ &quot;Annual Revenue : 5000 Footfall : 50&quot;
+- Do NOT return &quot;Unknown&quot;
+- If a value is not found, return null
+
+Return ONLY valid JSON:
+
+{
+ &quot;storeName&quot;: null,
+ &quot;Annual Revenue&quot;: &quot;0.00&quot;,
+ &quot;Average Footfall&quot;: &quot;0.00&quot;
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_5</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (text)
+- Average Footfall (text)
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Accept formats like:
+ &quot;Annual Revenue : 5000 Footfall : 50&quot;
+- Do NOT return &quot;Unknown&quot;
+
+Return ONLY valid JSON:
+
+{
+ &quot;storeName&quot;: null,
+ &quot;Annual Revenue&quot;: &quot;0.00&quot;,
+ &quot;Average Footfall&quot;: &quot;0.00&quot;
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_6</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (text)
+- Average Footfall (text)
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Accept formats like:
+ &quot;Annual Revenue : 5000 Footfall : 50&quot;
+- Do NOT return &quot;Unknown&quot;
+
+Return ONLY valid JSON:
+
+{
+ &quot;storeName&quot;: &quot;xyz&quot;,
+ &quot;Annual Revenue&quot;: &quot;0.00&quot;,
+ &quot;Average Footfall&quot;: &quot;0.00&quot;
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_7</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (in text format)
+- Average Footfall (in text format text)
+
+also return the input as simple text(not json).
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Accept formats like:
+ &quot;Annual Revenue : 5000 Footfall : 50&quot;
+- Do NOT return &quot;Unknown&quot;
+
+Return ONLY valid JSON: also return the input text as it is(not in json format)
+
+{
+ &quot;storeName&quot;: &quot;xyz&quot;,
+ &quot;Annual Revenue&quot;: &quot;0.00&quot;,
+ &quot;Average Footfall&quot;: &quot;0.00&quot;
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_8</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (in text format)
+- Average Footfall (in text format text)
+
+also return the input as simple text(not json).
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Do NOT return &quot;Unknown&quot;
+- return null if you don&apos;t have values
+Return ONLY valid JSON: also return the input text as it is(not in json format)
+
+{
+ &quot;storeName&quot;: &quot;xyz&quot;,
+ &quot;Annual Revenue&quot;: &quot;0.00&quot;,
+ &quot;Average Footfall&quot;: &quot;0.00&quot;
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_9</versionIdentifier>
+    </templateVersions>
+    <templateVersions>
+        <content>You are a data extraction assistant.
+
+Extract structured values from the retail visit note below.
+
+NOTE:
+{!$Input:notetext}
+
+Your task:
+Identify and return:
+- storeName (if present, else null)
+- Annual Revenue (in text format)
+- Average Footfall (in text format text)
+
+also return the input as simple text(not json).
+
+Strict Rules:
+- Treat &quot;Footfall&quot; as &quot;Average Footfall&quot;
+- Extract values even if written in a single line
+- Do NOT return &quot;Unknown&quot;
+- return null if you don&apos;t have values
+Return ONLY valid JSON: also return the input text as it is(not in json format)
+
+{
+ &quot;storeName&quot;: &quot;xyz&quot;,
+ &quot;Annual Revenue&quot;: &quot;0.00&quot;,
+ &quot;Average Footfall&quot;: &quot;0.00&quot;
+}
+</content>
+        <fileDroppingStrategy>{&quot;dropFilesBy&quot;:&quot;LAST_MODIFIED_DATE&quot;,&quot;dropFileStartingWith&quot;:&quot;OLDEST&quot;}</fileDroppingStrategy>
+        <inputs>
+            <apiName>notetext</apiName>
+            <definition>primitive://String</definition>
+            <masterLabel>notetext</masterLabel>
+            <referenceName>Input:notetext</referenceName>
+            <required>true</required>
+        </inputs>
+        <isCitationEnabled>false</isCitationEnabled>
+        <primaryModel>sfdc_ai__DefaultGPT5Mini</primaryModel>
+        <status>Published</status>
+        <versionIdentifier>k481L8sKp7F2lN75N8ox94+EBW0867ZqfJq6VXz9PyQ=_10</versionIdentifier>
+    </templateVersions>
+    <type>einstein_gpt__flex</type>
+    <visibility>Global</visibility>
+</GenAiPromptTemplate>

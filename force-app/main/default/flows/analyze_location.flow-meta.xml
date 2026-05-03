@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>66.0</apiVersion>
+    <areMetricsLoggedToDataCloud>false</areMetricsLoggedToDataCloud>
+    <assignments>
+        <name>Assign_Recommendatio3</name>
+        <label>⚠️Recommended with Caution</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recommendationMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Recommended with Caution</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Final_Analysis_Result_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Recommendatio4</name>
+        <label>❌Not Recommended</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recommendationMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Not Recommended</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Final_Analysis_Result_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Recommendation1</name>
+        <label>⭐Blind Spot (Highly Recommended)</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recommendationMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Highly Recommended. Kind of blind spot where demand is high and the competitive density is low.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Final_Analysis_Result_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_Recommendation2</name>
+        <label>✅Recommended</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>recommendationMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Recommended </stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Final_Analysis_Result_Message</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Final_Analysis_Result_Message</name>
+        <label>Final Analysis Result Message</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignmentItems>
+            <assignToReference>finalAnalysesMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>finalMessageBody</elementReference>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <decisions>
+        <description>Analyzes the different parameters to create a recommendation</description>
+        <name>Recommendation</name>
+        <label>Recommendation</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>Assign_Recommendatio4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>❌Not Recommended</defaultConnectorLabel>
+        <rules>
+            <name>Blind_Spot_Highly_Recommended</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Demand_Score__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>80.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Competition_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Low</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Recommendation1</targetReference>
+            </connector>
+            <label>⭐Blind Spot (Highly Recommended)</label>
+        </rules>
+        <rules>
+            <name>Recommended</name>
+            <conditionLogic>(1 AND 2) OR ( 3 AND 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Demand_Score__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>80.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Competition_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Medium</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Demand_Score__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Competition_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Low</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Recommendation2</targetReference>
+            </connector>
+            <label>✅Recommended</label>
+        </rules>
+        <rules>
+            <name>Recommended_with_Caution</name>
+            <conditionLogic>(1 AND 2) OR(3 AND 4) OR (5 AND 6)</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Demand_Score__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>80.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Competition_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>High</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Demand_Score__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Competition_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Medium</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Demand_Score__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <numberValue>60.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Location_Record.Competition_Level__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Low</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assign_Recommendatio3</targetReference>
+            </connector>
+            <label>⚠️Recommended with Caution</label>
+        </rules>
+    </decisions>
+    <description>This flow is used to analyze a location and calculate metrics like demand score etc..</description>
+    <environments>Default</environments>
+    <interviewLabel>analyze location {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>analyze location</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordLookups>
+        <description>Get the asked Location&apos;s data i.e. dempgraphic Competitor based analysed data</description>
+        <name>Get_Location_Record</name>
+        <label>Get Location Record</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Recommendation</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>newLocationSec</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Location</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <runInMode>SystemModeWithoutSharing</runInMode>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>Get_Location_Record</targetReference>
+        </connector>
+    </start>
+    <status>Active</status>
+    <textTemplates>
+        <description>Contains the body of the final analyses message that will nbe returned along with the recommendation</description>
+        <name>finalMessageBody</name>
+        <isViewedAsPlainText>true</isViewedAsPlainText>
+        <text>Location: {!newLocationSec}
+Demand Score: {!Get_Location_Record.Demand_Score__c}
+Competition Level : {!Get_Location_Record.Competition_Level__c}
+Revenue: ₹ {!Get_Location_Record.Avg_Revenue__c}
+Payback:  {!Get_Location_Record.Avg_Payback_Period__c} years
+Recommendation: {!recommendationMessage}</text>
+    </textTemplates>
+    <variables>
+        <description>It contains the final analyses result for the location along with the recommendation</description>
+        <name>finalAnalysesMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>true</isOutput>
+    </variables>
+    <variables>
+        <description>Contains the sector for the location where the user wants to open a new retail store</description>
+        <name>newLocationSec</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <description>Contains whether the store opening is recommended or not.</description>
+        <name>recommendationMessage</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+</Flow>
